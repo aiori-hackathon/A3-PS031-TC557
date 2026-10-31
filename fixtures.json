@@ -1,0 +1,295 @@
+[
+  {
+    "id": "UP-01",
+    "description": "Single-hop provider path",
+    "local_as": 64500,
+    "neighbor_as": 65001,
+    "relationship": "provider",
+    "as_path": [
+      65001
+    ],
+    "expected": "Valid"
+  },
+  {
+    "id": "UP-02",
+    "description": "Two-hop fully attested upstream chain",
+    "local_as": 64500,
+    "neighbor_as": 65001,
+    "relationship": "peer",
+    "as_path": [
+      65001,
+      65002
+    ],
+    "expected": "Valid"
+  },
+  {
+    "id": "UP-03",
+    "description": "Three-hop fully attested upstream chain",
+    "local_as": 64500,
+    "neighbor_as": 65001,
+    "relationship": "provider",
+    "as_path": [
+      65001,
+      65002,
+      65003
+    ],
+    "expected": "Valid"
+  },
+  {
+    "id": "UP-04",
+    "description": "Provider authorization break",
+    "local_as": 64500,
+    "neighbor_as": 65001,
+    "relationship": "provider",
+    "as_path": [
+      65001,
+      65002,
+      65004
+    ],
+    "expected": "Invalid"
+  },
+  {
+    "id": "UP-05",
+    "description": "Missing ASPA at origin-side hop",
+    "local_as": 64500,
+    "neighbor_as": 65001,
+    "relationship": "provider",
+    "as_path": [
+      65001,
+      65002,
+      66000
+    ],
+    "expected": "Unknown"
+  },
+  {
+    "id": "UP-06",
+    "description": "Missing ASPA at recent hop but later hard break",
+    "local_as": 64500,
+    "neighbor_as": 65001,
+    "relationship": "provider",
+    "as_path": [
+      65001,
+      66000,
+      65004
+    ],
+    "expected": "Invalid"
+  },
+  {
+    "id": "UP-07",
+    "description": "Empty AS_PATH",
+    "local_as": 64500,
+    "neighbor_as": 65001,
+    "relationship": "provider",
+    "as_path": [],
+    "expected": "Invalid"
+  },
+  {
+    "id": "UP-08",
+    "description": "Neighbor ASN mismatch",
+    "local_as": 64500,
+    "neighbor_as": 65009,
+    "relationship": "provider",
+    "as_path": [
+      65001
+    ],
+    "expected": "Invalid"
+  },
+  {
+    "id": "UP-09",
+    "description": "AS_SET is present",
+    "local_as": 64500,
+    "neighbor_as": 65001,
+    "relationship": "provider",
+    "as_path": [
+      65001,
+      65002
+    ],
+    "as_sets": true,
+    "expected": "Invalid"
+  },
+  {
+    "id": "UP-10",
+    "description": "Consecutive AS_PATH stuffing is compressed",
+    "local_as": 64500,
+    "neighbor_as": 65001,
+    "relationship": "provider",
+    "as_path": [
+      65001,
+      65001,
+      65002
+    ],
+    "expected": "Valid"
+  },
+  {
+    "id": "UP-11",
+    "description": "Route-server-client exception to neighbor check",
+    "local_as": 64500,
+    "neighbor_as": 65001,
+    "relationship": "peer",
+    "as_path": [
+      65002
+    ],
+    "route_server_client": true,
+    "expected": "Valid"
+  },
+  {
+    "id": "UP-12",
+    "description": "Unknown with all evidence absent",
+    "local_as": 64500,
+    "neighbor_as": 65001,
+    "relationship": "peer",
+    "as_path": [
+      65001,
+      66100
+    ],
+    "expected": "Unknown"
+  },
+  {
+    "id": "DOWN-01",
+    "description": "Customer export, single hop",
+    "local_as": 64500,
+    "neighbor_as": 65001,
+    "relationship": "customer",
+    "as_path": [
+      65001
+    ],
+    "expected": "Valid"
+  },
+  {
+    "id": "DOWN-02",
+    "description": "Customer export with valid up/down ramps",
+    "local_as": 64500,
+    "neighbor_as": 65001,
+    "relationship": "customer",
+    "as_path": [
+      65001,
+      65002,
+      65003
+    ],
+    "expected": "Valid"
+  },
+  {
+    "id": "DOWN-03",
+    "description": "Customer export with provable combined ramp gap",
+    "local_as": 64500,
+    "neighbor_as": 65001,
+    "relationship": "customer",
+    "as_path": [
+      65001,
+      65004,
+      65002,
+      65005
+    ],
+    "expected": "Invalid"
+  },
+  {
+    "id": "DOWN-04",
+    "description": "Customer export with incomplete ASPA evidence",
+    "local_as": 64500,
+    "neighbor_as": 65001,
+    "relationship": "customer",
+    "as_path": [
+      65001,
+      65003,
+      66000
+    ],
+    "expected": "Unknown"
+  },
+  {
+    "id": "DOWN-05",
+    "description": "Customer neighbor mismatch",
+    "local_as": 64500,
+    "neighbor_as": 65002,
+    "relationship": "customer",
+    "as_path": [
+      65001
+    ],
+    "expected": "Invalid"
+  },
+  {
+    "id": "DOWN-06",
+    "description": "Customer AS_SET",
+    "local_as": 64500,
+    "neighbor_as": 65001,
+    "relationship": "customer",
+    "as_path": [
+      65001,
+      65002
+    ],
+    "as_sets": true,
+    "expected": "Invalid"
+  },
+  {
+    "id": "AUG-01",
+    "description": "Neighbor-AS augmentation for provider",
+    "local_as": 64500,
+    "neighbor_as": 65001,
+    "relationship": "provider",
+    "as_path": [
+      65002
+    ],
+    "neighbor_augmented": true,
+    "expected": "Valid"
+  },
+  {
+    "id": "AUG-02",
+    "description": "Neighbor-AS augmentation exposes missing provider authorization",
+    "local_as": 64500,
+    "neighbor_as": 65001,
+    "relationship": "provider",
+    "as_path": [
+      66000
+    ],
+    "neighbor_augmented": true,
+    "expected": "Unknown"
+  },
+  {
+    "id": "AUG-03",
+    "description": "Neighbor-AS augmentation exposes hard break",
+    "local_as": 64500,
+    "neighbor_as": 65001,
+    "relationship": "provider",
+    "as_path": [
+      65004
+    ],
+    "neighbor_augmented": true,
+    "expected": "Invalid"
+  },
+  {
+    "id": "POL-01",
+    "description": "Peer maps to upstream procedure",
+    "local_as": 64500,
+    "neighbor_as": 65001,
+    "relationship": "peer",
+    "as_path": [
+      65001,
+      65002
+    ],
+    "expected": "Valid"
+  },
+  {
+    "id": "POL-02",
+    "description": "Customer maps to downstream procedure",
+    "local_as": 64500,
+    "neighbor_as": 65001,
+    "relationship": "customer",
+    "as_path": [
+      65001,
+      65002
+    ],
+    "expected": "Valid"
+  },
+  {
+    "id": "POL-03",
+    "description": "Unknown is not silently treated as Invalid",
+    "local_as": 64500,
+    "neighbor_as": 65001,
+    "relationship": "peer",
+    "as_path": [
+      65001,
+      65002,
+      66000
+    ],
+    "expected": "Unknown"
+  }
+]
